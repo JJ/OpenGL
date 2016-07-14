@@ -10,50 +10,27 @@ using namespace std;
 
    cout << vertices.size() << endl;
     for(int i=0; i < vertices.size(); i++){
-      cout << "Aqui i vale " << i << endl;
+      //cout << "Aqui i vale " << i << endl;
       this->vertices.push_back(vertices[i]);
-      cout << this->vertices[i]._0 << " " << this->vertices[i]._1 << " " << this->vertices[i]._2 << endl;
+      //cout << this->vertices[i]._0 << " " << this->vertices[i]._1 << " " << this->vertices[i]._2 << endl;
     }
 
     for(int i=0; i < caras.size(); i++){
-      cout << "Caras: " << caras.size()  << endl;
+      //cout << "Caras: " << caras.size()  << endl;
       this->caras.push_back(caras[i]);
-      cout << this->caras[i]._0 << " " << this->caras[i]._1 << " " << this->caras[i]._2 << endl;
+      //cout << this->caras[i]._0 << " " << this->caras[i]._1 << " " << this->caras[i]._2 << endl;
     }
   }
-
-  void Figura::asignaAristas(vector<_vertex3f> vertices){
-    for(int i=0, j=0; i < vertices.size(); i++, j++){
-      _vertex2i aux(i, i+1);
-      //aristas.resize(aristas.size()+1);
-      aristas.push_back(aux);
-      if(i%2 == 0){
-	_vertex2i aux2(i-2, i);
-	j++;
-	//aristas.resize(aristas.size()+1);
-	aristas.push_back(aux);
-      }
-    }
-
-    
-  }
-/*void Figura::asignaCaras(vector<_vertex3f> vertices){
-    
-    for(int i=0, j=0; i < aristas.size(); i+2, j++){
-      _vertex3i aux(i, i+1, i+2);
-      caras[j] = aux;
-    }
-    
-    }*/
   
   void Figura::pointsMode(){
     glColor3f(0, 1, 0); //Color.
     glPointSize(5); //Tamanio del punto a pintar
     
-    // cout << "Voy a pintar wee" << endl;
+    cout << "Voy a pintar wee" << endl;
     glBegin(GL_POINTS);
     for(int i=0; i<this->vertices.size(); i++){
       glVertex3f(vertices[i]._0, vertices[i]._1, vertices[i]._2);
+      cout << "pintando punto " << vertices[i]._0 << " " << vertices[i]._1 << " " <<  vertices[i]._2 << endl;
     }
 
     glEnd();
@@ -66,7 +43,7 @@ using namespace std;
 
     glBegin(GL_TRIANGLES);
 
-    for(int i=0; i<this->caras.size(); i++){
+    for(int i=0; i<=this->caras.size(); i++){
       int v_1, v_2, v_3;
       v_1 = caras[i]._0;
       v_2 = caras[i]._1;
@@ -82,9 +59,26 @@ using namespace std;
   }
 
   void Figura::solidMode(bool chess_mode){
-    if(chess_mode == false){
-      for(int i=0; i < caras.size(); i++){
-      }
+    int v_1, v_2, v_3;
+
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); //los poligonos iran "rellenos" Coloreados.
+    glBegin(GL_TRIANGLES); //Modo triangulos.
+
+    for(int i=0; i < caras.size(); i++){
+      if(chess_mode == true && i%2 == 0)
+	glColor3f(1, 0, 0);
+      else glColor3f(0, 1, 0);
+
+      v_1 = caras[i]._0;
+      v_2 = caras[i]._1;
+      v_3 = caras[i]._2;
+      // Dibujamos la cara definida por las aristas
+      glVertex3f(vertices[v_1]._0, vertices[v_1]._1, vertices[v_1]._2);
+      glVertex3f(vertices[v_2]._0, vertices[v_2]._1, vertices[v_2]._2);
+      glVertex3f(vertices[v_3]._0, vertices[v_3]._1, vertices[v_3]._2);
     }
+
+    glEnd();
   }
+
 
