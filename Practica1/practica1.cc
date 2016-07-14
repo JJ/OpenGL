@@ -120,10 +120,10 @@ for (i=0;i<8;i++){
 	}
 	glEnd();*/
 
-  //Cubo.pointsMode();
+  Cubo.pointsMode();
   //Tetraedro.linesMode();
   //Tetraedro.pointsMode();
-    Cubo.linesMode();
+  //  Cubo.linesMode();
 }
 
 
@@ -247,7 +247,7 @@ _vertex3f p4 = _vertex3f(1, 1, 0);
 _vertex3f p5 = _vertex3f(0, 0, 0);
 _vertex3f p6 = _vertex3f(0, 0, 1);
 _vertex3f p7 = _vertex3f(1, 0, 1);
- _vertex3f p8 = _vertex3f(0, 0, 1);
+_vertex3f p8 = _vertex3f(1, 0, 0);
  //Caras del cubo
  _vertex3i c1 = _vertex3i(0, 1, 2);
  _vertex3i c2 = _vertex3i(2, 3, 0);

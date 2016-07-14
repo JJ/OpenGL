@@ -29,7 +29,6 @@ default : $(TARGETS)
 #
 $(TARGETS) : practica1.o
 	$(CC) -o $@ $(CXXFLAGS) practica1.o $(LDFLAGS)
-
 #
 #
 clean:
