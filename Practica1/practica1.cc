@@ -34,10 +34,12 @@ int UI_window_pos_x=50,UI_window_pos_y=50,UI_window_width=500,UI_window_height=5
 //Declaracion de las estructuras a representar.
 //CUBO, los puntos van en orden de los ejes de coordenadas x, y, z.
 Figura Cubo;
- 
 //TETRAEDRO.
 Figura Tetraedro;
+Figura Pinta = Cubo;
 
+//Modo en el que pintar
+int modo = 0;
 //**************************************************************************
 //
 //***************************************************************************
@@ -106,24 +108,21 @@ glEnd();
 // Funcion que dibuja los objetos
 //***************************************************************************
 
-void draw_objects()
+void draw_objects(Figura &pinta, int modo)
 {
-  /*GLfloat Vertices[8][3]= {{5,0,0},{4,4,0},{0,5,0},{-4,4,0},{-5,0,0},{-4,-4,0},{0,-5,0},{4,-4,0}};
-int i;
-
-glColor3f(0,1,0);
-glPointSize(4);
-
-glBegin(GL_POINTS);
-for (i=0;i<8;i++){
-	glVertex3fv((GLfloat *) &Vertices[i]);
-	}
-	glEnd();*/
-
-  Cubo.pointsMode();
-  //Tetraedro.linesMode();
-  //Tetraedro.pointsMode();
-  //  Cubo.linesMode();
+  switch (modo){
+  case 0:
+    pinta.pointsMode();
+    break;
+  case 1:
+    pinta.linesMode();
+    break;
+  case 2:
+    pinta.solidMode(false);
+    break;
+  case 3:
+    pinta.solidMode(true);
+  }
 }
 
 
@@ -137,7 +136,7 @@ void draw_scene(void)
 clear_window();
 change_observer();
 draw_axis();
-draw_objects();
+draw_objects(Pinta, modo);
 glutSwapBuffers();
 }
 
@@ -158,6 +157,11 @@ glViewport(0,0,Ancho1,Alto1);
 glutPostRedisplay();
 }
 
+/****************************************************************************
+Funcion para imprimir la ayuda
+****************************************************************************/
+void printHelp(){}
+
 
 //***************************************************************************
 // Funcion llamada cuando se produce aprieta una tecla normal
@@ -171,7 +175,35 @@ glutPostRedisplay();
 void normal_keys(unsigned char Tecla1,int x,int y)
 {
 
-if (toupper(Tecla1)=='Q') exit(0);
+  if (toupper(Tecla1)=='Q') exit(0);
+  if (toupper(Tecla1) == 'A'){
+    Pinta = Cubo;
+  }else if(toupper(Tecla1) == 'S'){
+    Pinta = Tetraedro;
+  }else{
+    char Tecla = toupper(Tecla1);
+    
+    switch (Tecla){
+    case 'Z':
+      modo = 0; //Puntos
+      break;
+    case 'X':
+      modo = 1; //Lineas
+      break;
+    case 'C':
+      modo = 2; //Solido
+      break;
+    case 'V':
+      modo = 3; //Ajedrez
+      break;
+    default:
+      cout << "La tecla pulsadas es erronea " << endl;
+      printHelp();
+      break;
+    }
+  }
+
+  draw_scene();
 }
 
 //***************************************************************************
@@ -264,8 +296,7 @@ _vertex3f p8 = _vertex3f(1, 0, 0);
  
  vector<_vertex3f> vert;
  vector<_vertex3i> car;
- //vert.resize(8);
- //car.resize(12);
+ 
  
 vert.push_back(p1);
 vert.push_back(p2);
@@ -297,15 +328,26 @@ _vertex3f p2t = _vertex3f(1, 0, 0);
 _vertex3f p3t = _vertex3f(1, 1, 1);
 _vertex3f p4t = _vertex3f(0, 0, 0);
 
-std::vector<_vertex3f> vertT; //Vector de vertices del tetraedro
+//Caras del tetraedro
+ _vertex3i c1t = _vertex3i(0, 2, 1);
+ _vertex3i c2t = _vertex3i(0, 3, 2);
+ _vertex3i c3t = _vertex3i(1, 3, 2);
+ _vertex3i c4t = _vertex3i(1, 3, 0);
+
+
+ vector<_vertex3f> vertT; //Vector de vertices del tetraedro
  vector<_vertex3i> carT;
- vertT.resize(4);
-vertT.push_back(p1t);
+ vertT.push_back(p1t);
 vertT.push_back(p2t);
 vertT.push_back(p3t);
 vertT.push_back(p4t);
+
+ carT.push_back(c1t);
+ carT.push_back(c2t);
+ carT.push_back(c3t);
+ carT.push_back(c4t);
 //inicializo el tetraedro.
-//Tetraedro.init(vertT, carT);
+Tetraedro.init(vertT, carT);
 // se llama a la inicialización de glut
 glutInit(&argc, argv);
 
@@ -328,7 +370,7 @@ glutInitWindowSize(UI_window_width,UI_window_height);
 
 // llamada para crear la ventana, indicando el titulo (no se visualiza hasta que se llama
 // al bucle de eventos)
-glutCreateWindow("Práctica 1");
+glutCreateWindow("Práctica 1 Rafael Leyva");
 
 // asignación de la funcion llamada "dibujar" al evento de dibujo
 glutDisplayFunc(draw_scene);
