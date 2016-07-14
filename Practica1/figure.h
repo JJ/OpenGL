@@ -18,6 +18,7 @@ class Figura{
 
  public:
   void init(vector<_vertex3f> vertices, vector<_vertex3i> caras);
+  Figura& operator = (const Figura &asig);
   void pointsMode();
   void linesMode();
   void solidMode(bool chessMode);
