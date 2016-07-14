@@ -5,22 +5,26 @@
 #include "vertex.h"
 #include <stdlib.h>
 
-const int AXIS_SIZE = 5000;
-
 using namespace std;
+
+#ifndef FIGURA
+#define FIGURA
 
 class Figura{
  private:
   vector<_vertex3f> vertices;
   vector<_vertex3i> caras;
-  vector<_vertex3d> aristas;
+  vector<_vertex2i> aristas;
 
   //metodos privados
-  asignaAristas(vector<_vertex3f> vertices);
-  asignaCaras(vector<vertex3d> aristas);
+  void asignaAristas(vector<_vertex3f> vertices);
+  void asignaCaras(vector<_vertex3f> aristas);
 
  public:
-  Figura(vector<vertex3f> vertices);
-  pintaVertices();
-  pintaAristas();
-  pintaCaras(boolean ajedrez);
+  void init(vector<_vertex3f> vertices, vector<_vertex3i> caras);
+  void pointsMode();
+  void linesMode();
+  void solidMode(bool ajedrez);
+};
+
+#endif
