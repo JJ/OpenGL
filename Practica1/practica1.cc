@@ -10,6 +10,10 @@
 #include "stdio.h"
 #include <GL/glut.h>
 #include <ctype.h>
+#include "./figure.cpp"
+#include "./vertex.h"
+#include "vector"
+
 
 // tamaño de los ejes
 const int AXIS_SIZE=5000;
@@ -24,6 +28,15 @@ GLfloat Window_width,Window_height,Front_plane,Back_plane;
 
 // variables que determninan la posicion y tamaño de la ventana X
 int UI_window_pos_x=50,UI_window_pos_y=50,UI_window_width=500,UI_window_height=500;
+
+//Las declaro aqui para que no se cree un nuevo cubo en cada llamada a
+//drawobjects.
+//Declaracion de las estructuras a representar.
+//CUBO, los puntos van en orden de los ejes de coordenadas x, y, z.
+Figura Cubo;
+ 
+//TETRAEDRO.
+Figura Tetraedro;
 
 //**************************************************************************
 //
@@ -95,7 +108,7 @@ glEnd();
 
 void draw_objects()
 {
-GLfloat Vertices[8][3]= {{5,0,0},{4,4,0},{0,5,0},{-4,4,0},{-5,0,0},{-4,-4,0},{0,-5,0},{4,-4,0}};
+  /*GLfloat Vertices[8][3]= {{5,0,0},{4,4,0},{0,5,0},{-4,4,0},{-5,0,0},{-4,-4,0},{0,-5,0},{4,-4,0}};
 int i;
 
 glColor3f(0,1,0);
@@ -105,7 +118,12 @@ glBegin(GL_POINTS);
 for (i=0;i<8;i++){
 	glVertex3fv((GLfloat *) &Vertices[i]);
 	}
-glEnd();
+	glEnd();*/
+
+  //Cubo.pointsMode();
+  //Tetraedro.linesMode();
+  //Tetraedro.pointsMode();
+    Cubo.linesMode();
 }
 
 
@@ -221,7 +239,73 @@ glViewport(0,0,UI_window_width,UI_window_height);
 
 int main(int argc, char **argv)
 {
+  //CUBO  
+_vertex3f p1 = _vertex3f(0, 1, 0);
+_vertex3f p2 = _vertex3f(0, 1, 1);
+_vertex3f p3 = _vertex3f(1, 1, 1);
+_vertex3f p4 = _vertex3f(1, 1, 0);
+_vertex3f p5 = _vertex3f(0, 0, 0);
+_vertex3f p6 = _vertex3f(0, 0, 1);
+_vertex3f p7 = _vertex3f(1, 0, 1);
+ _vertex3f p8 = _vertex3f(0, 0, 1);
+ //Caras del cubo
+ _vertex3i c1 = _vertex3i(0, 1, 2);
+ _vertex3i c2 = _vertex3i(2, 3, 0);
+ _vertex3i c3 = _vertex3i(0, 4, 1);
+ _vertex3i c4 = _vertex3i(4, 5, 1);
+ _vertex3i c5 = _vertex3i(4, 0, 3);
+ _vertex3i c6 = _vertex3i(3, 7, 4);
+ _vertex3i c7 = _vertex3i(4, 5, 6);
+ _vertex3i c8 = _vertex3i(6, 7, 4);
+ _vertex3i c9 = _vertex3i(6, 5, 1);
+ _vertex3i c10 = _vertex3i(6, 2, 1);
+ _vertex3i c11 = _vertex3i(6, 2, 3);
+ _vertex3i c12 = _vertex3i(6, 7, 3);
+ 
+ vector<_vertex3f> vert;
+ vector<_vertex3i> car;
+ //vert.resize(8);
+ //car.resize(12);
+ 
+vert.push_back(p1);
+vert.push_back(p2);
+vert.push_back(p3);
+vert.push_back(p4);
+vert.push_back(p5);
+vert.push_back(p6);
+vert.push_back(p7);
+vert.push_back(p8);
 
+ car.push_back(c1);
+ car.push_back(c2);
+ car.push_back(c3);
+ car.push_back(c4);
+ car.push_back(c5);
+ car.push_back(c6);
+ car.push_back(c7);
+ car.push_back(c8);
+ car.push_back(c9);
+ car.push_back(c10);
+ car.push_back(c11);
+ car.push_back(c12);
+ 
+//Inicializo el cubo.
+ Cubo.init(vert, car);
+//TETRAEDRO 
+_vertex3f p1t = _vertex3f(0, 1, 0);
+_vertex3f p2t = _vertex3f(1, 0, 0);
+_vertex3f p3t = _vertex3f(1, 1, 1);
+_vertex3f p4t = _vertex3f(0, 0, 0);
+
+std::vector<_vertex3f> vertT; //Vector de vertices del tetraedro
+ vector<_vertex3i> carT;
+ vertT.resize(4);
+vertT.push_back(p1t);
+vertT.push_back(p2t);
+vertT.push_back(p3t);
+vertT.push_back(p4t);
+//inicializo el tetraedro.
+//Tetraedro.init(vertT, carT);
 // se llama a la inicialización de glut
 glutInit(&argc, argv);
 
