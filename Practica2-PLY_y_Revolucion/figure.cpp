@@ -1,3 +1,4 @@
+
 #include <vector>
 #include "./vertex.h"
 #include "./figure.h"
@@ -138,8 +139,7 @@ void Figura::linesMode(){
   glBegin(GL_TRIANGLES);
   cout << "Pintar lineas" << endl;
 
-  for(int i=0; i<=this->caras.size(); i++){
-    cout << "cara " << i << endl;
+  for(int i=0; i < this->caras.size(); i++){
     int v_1, v_2, v_3;
     v_1 = caras[i]._0;
     v_2 = caras[i]._1;
