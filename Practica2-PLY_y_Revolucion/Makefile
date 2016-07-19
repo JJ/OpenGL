@@ -28,7 +28,7 @@ default : $(TARGETS)
 # regla de ejecucion
 #
 $(TARGETS) : practica2.o
-	$(CC) -o $@ $(CXXFLAGS) practica1.o $(LDFLAGS)
+	$(CC) -o $@ $(CXXFLAGS) practica2.o $(LDFLAGS)
 #
 #
 clean:
