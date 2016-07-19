@@ -88,7 +88,7 @@ void Figura::initfromPLY(char* ply_name){
   pLY.read(_coordenadas, _indices_caras);
 
   //ALmacenamos los puntos en el vector _puntos
-  for(int i=0; i < _coordenadas.size(); i+3){
+  for(int i=0; i < _coordenadas.size(); i+=3){
     //Creamos un vertice con las coordenadas que hemos leido del PLY.
     _vertex3f aux;
     aux._0 = _coordenadas.at(i);
@@ -100,7 +100,7 @@ void Figura::initfromPLY(char* ply_name){
   }
 
   //Igual para las caras.
-  for(int i=0; i < _indices_caras.size(); i+3){
+  for(int i=0; i < _indices_caras.size(); i+=3){
     _vertex3i aux;
     aux._0 = _indices_caras.at(i);
     aux._1 = _indices_caras.at(i+1);
@@ -109,8 +109,12 @@ void Figura::initfromPLY(char* ply_name){
     _caras.push_back(aux);
   }
 
+  cout << "Voy a ponerlo en los vectores de la clase" << endl;
+
   this->vertices = _puntos;
   this->caras = _caras;
+
+  cout << "Ya he almacenado los vectores" << endl;
 }
 void Figura::pointsMode(){
   glColor3f(0, 1, 0); //Color.
