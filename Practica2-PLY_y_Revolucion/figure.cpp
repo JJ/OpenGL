@@ -41,6 +41,7 @@ Figura::Figura(char* ply_name){
     _caras.push_back(aux);
   }
 
+  //Asignamos el valor a las variables de clase.
   this->vertices = _puntos;
   this->caras = _caras;
 }
