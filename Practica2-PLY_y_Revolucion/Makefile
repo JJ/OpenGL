@@ -2,7 +2,7 @@
 #
 # nombre del fichero ejecutable
 #
-TARGETS= practica1
+TARGETS= practica2
 
 # banderas para el compilador (C y C++). Se indican los directorios donde se puenden
 # encontrar ficheros para incluir mediante la opcion -I
@@ -27,7 +27,7 @@ default : $(TARGETS)
 
 # regla de ejecucion
 #
-$(TARGETS) : practica1.o
+$(TARGETS) : practica2.o
 	$(CC) -o $@ $(CXXFLAGS) practica1.o $(LDFLAGS)
 #
 #
