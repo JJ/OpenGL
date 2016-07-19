@@ -14,6 +14,10 @@
 #include "./vertex.h"
 #include "vector"
 
+#include <iostream>
+
+using namespace std;
+
 
 // tamaño de los ejes
 const int AXIS_SIZE=5000;
@@ -162,7 +166,17 @@ Funcion para imprimir la ayuda
 ****************************************************************************/
 void printHelp(){}
 
-
+/****************************************************************************
+Funcion para cargar PLY en figura a pintar.
+****************************************************************************/
+void cargarPLY(){
+  char plyname[256];
+  //Leo el archivo y lo cargo en Pinta.
+  cout << "Introduce el nombre del archivo con extendion .ply" << endl;
+  cin.get(plyname, 256);
+  
+  Pinta.initfromPLY(plyname);
+}
 //***************************************************************************
 // Funcion llamada cuando se produce aprieta una tecla normal
 //
@@ -195,6 +209,9 @@ void normal_keys(unsigned char Tecla1,int x,int y)
       break;
     case 'V':
       modo = 3; //Ajedrez
+      break;
+    case 'P':
+      cargarPLY();
       break;
     default:
       cout << "La tecla pulsadas es erronea " << endl;
