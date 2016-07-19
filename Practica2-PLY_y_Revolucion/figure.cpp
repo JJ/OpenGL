@@ -2,9 +2,10 @@
 #include "./vertex.h"
 #include "./figure.h"
 #include <iostream>
-#include "./lector_ply/file_ply_stl.h"
+#include "./lector_ply/file_ply_stl.cc"
 
 using namespace std;
+
 Figura::Figura(char* ply_name){
   //Abrimos el fichero PLY
   _file_ply pLY;
@@ -64,13 +65,53 @@ void Figura::init(vector<_vertex3f> vertices, vector<_vertex3i> caras){
 }
 
 //Operador de asignacion
-Figura& Figura::operator=(const Figura &asig){
+Figura& Figura::operator=(Figura &asig){
   this->vertices = asig.vertices;
   this->caras = asig.caras;
 
   return *this;
 }
-  
+
+//Metodo para leer un PLY en una figura ya creada.
+void Figura::initfromPLY(char* ply_name){
+  _file_ply pLY;
+  pLY.open(ply_name);
+
+    //Creamos las estructuras de datos que vamos a usar.
+  vector<_vertex3f> _puntos;
+  vector<_vertex3i> _caras;
+
+  vector<float> _coordenadas;
+  vector<int> _indices_caras;
+
+  //Leemos el ply
+  pLY.read(_coordenadas, _indices_caras);
+
+  //ALmacenamos los puntos en el vector _puntos
+  for(int i=0; i < _coordenadas.size(); i+3){
+    //Creamos un vertice con las coordenadas que hemos leido del PLY.
+    _vertex3f aux;
+    aux._0 = _coordenadas.at(i);
+    aux._1 = _coordenadas.at(i+1);
+    aux._2 = _coordenadas.at(i+2);
+
+    //Lo guardamos en el vector de puntos.
+    _puntos.push_back(aux);
+  }
+
+  //Igual para las caras.
+  for(int i=0; i < _indices_caras.size(); i+3){
+    _vertex3i aux;
+    aux._0 = _indices_caras.at(i);
+    aux._1 = _indices_caras.at(i+1);
+    aux._2 = _indices_caras.at(i+2);
+
+    _caras.push_back(aux);
+  }
+
+  this->vertices = _puntos;
+  this->caras = _caras;
+}
 void Figura::pointsMode(){
   glColor3f(0, 1, 0); //Color.
   glPointSize(5); //Tamanio del punto a pintar
