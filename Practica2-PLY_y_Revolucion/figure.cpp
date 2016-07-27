@@ -252,10 +252,10 @@ void Figura::calculaTapas(int axis, int ngiros){
     _vertex3f superior(0.0, vertices[vertices.size()-1]._1, 0.0);
     vertices.push_back(superior);
     
-    for (int step = 0; step < ngiros; step++){
-      int perfilactual = (step+1) * long_perfil-1;
-      int siguientePerfil = perfilactual + long_perfil;
-      caras.push_back(_vertex3i(vertices.size()-1, perfilactual,siguientePerfil));
+    for (int i = 0; i < ngiros; i++){
+      int act = (i+1) * long_perfil-1;
+      int sig = act + long_perfil;
+      caras.push_back(_vertex3i(vertices.size()-1, act, sig));
     }
   }
 
@@ -265,10 +265,10 @@ void Figura::calculaTapas(int axis, int ngiros){
     _vertex3f inferior(0.0, vertices[0]._1, 0.0);
     vertices.push_back(inferior);
   
-    for (int step = 0; step < ngiros; step++){
-      int perfilactual = step * long_perfil;
-      int siguientePerfil = perfilactual + long_perfil;
-      caras.push_back(_vertex3i(vertices.size()-1, siguientePerfil, perfilactual));
+    for (int i = 0; i < ngiros; i++){
+      int act = i * long_perfil;
+      int sig = act + long_perfil;
+      caras.push_back(_vertex3i(vertices.size()-1, sig, act));
     }
   }
 }
